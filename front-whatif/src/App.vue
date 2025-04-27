@@ -1,5 +1,6 @@
 <template>
   <h1>Hello World</h1>
+  <!-- Добавить импорты тайлвинда -->
 </template>
 
 <script setup>
