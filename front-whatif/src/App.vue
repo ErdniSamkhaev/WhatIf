@@ -25,7 +25,7 @@
 
 <style>
 .bg-image {
-  background-image: url("./assets/photo.jpg");
+  /* background-image: url("./assets/photo.jpg"); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { HistoricalScenarioService } from "../services/ai/historicalScenarioService";
+import { YandexGptService } from "../services/ai/yandexGptService";
 
 export const generateHistoricalScenario = async (
   req: Request,
@@ -15,15 +15,17 @@ export const generateHistoricalScenario = async (
       return;
     }
 
-    // Декодируем запрос
-    const decodedQuery = decodeURIComponent(query);
+    // Создаем экземпляр сервиса
+    const yandexGpt = new YandexGptService();
 
-    const scenarioService = new HistoricalScenarioService();
-    const result = await scenarioService.generate(decodedQuery);
+    // Генерируем ответ через YandexGPT
+    const aiText = await yandexGpt.generate(
+      "Сформулируй альтернативный исторический сценарий: " + query
+    );
 
-    // Явно указываем кодировку при отправке ответа
+    // Отправляем ответ клиенту
     res.setHeader("Content-Type", "application/json; charset=utf-8");
-    res.status(200).json(result);
+    res.status(200).json({ text: aiText });
   } catch (error) {
     console.error("Error generating scenario:", error);
     res.status(500).json({
