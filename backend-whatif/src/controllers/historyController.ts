@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { YandexGptService } from "../services/ai/yandexGptService";
+import { HistoricalScenario } from "../models/HistoricalScenario";
 
 export const generateHistoricalScenario = async (
   req: Request,
@@ -15,17 +16,19 @@ export const generateHistoricalScenario = async (
       return;
     }
 
-    // Создаем экземпляр сервиса
     const yandexGpt = new YandexGptService();
+    const response = await yandexGpt.generate(query);
 
-    // Генерируем ответ через YandexGPT
-    const aiText = await yandexGpt.generate(
-      "Сформулируй альтернативный исторический сценарий: " + query
-    );
+    // Создаем экземпляр исторического сценария
+    const scenario = new HistoricalScenario({
+      text: response,
+      facts: [], // Будет заполнено после анализа ответа
+      sources: [], // Будет заполнено после анализа ответа
+      confidence: 0,
+      unknownAreas: [],
+    });
 
-    // Отправляем ответ клиенту
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
-    res.status(200).json({ text: aiText });
+    res.status(200).json(scenario);
   } catch (error) {
     console.error("Error generating scenario:", error);
     res.status(500).json({

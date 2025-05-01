@@ -1,5 +1,33 @@
-# Vue 3 + Vite
+# WhatIf - Альтернативная история
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Веб-приложение для генерации альтернативных исторических сценариев с использованием AI.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Технологии
+
+- Vue 3
+- Vite
+- Pinia
+- Vue Router
+
+## Установка
+
+```bash
+# Установка зависимостей
+npm install
+
+# Запуск в режиме разработки
+npm run dev
+
+# Сборка для продакшена
+npm run build
+```
+
+## Структура проекта
+src/
+├── api/ # API клиенты
+├── assets/ # Статические ресурсы
+├── components/ # Vue компоненты
+├── router/ # Настройки маршрутизации
+├── store/ # Хранилище состояния (Pinia)
+├── views/ # Компоненты страниц
+└── App.vue # Корневой компонент

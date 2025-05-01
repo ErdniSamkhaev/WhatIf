@@ -1,4 +1,3 @@
-// src/api/history.js
 export async function generateScenario(query) {
   const response = await fetch("http://localhost:3000/api/generate", {
     method: "POST",

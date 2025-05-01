@@ -11,11 +11,10 @@
 
     <div
       style="
-        background: #fff;
         color: #222;
         border-radius: 12px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-        padding: 2em;
+        padding: 0;
         max-width: 600px;
         margin: 0 auto;
       "
@@ -26,12 +25,12 @@
             for="query"
             style="
               display: block;
-              font-size: 1em;
-              color: #333;
-              margin-bottom: 0.5em;
+              font-size: 1.2em;
+              color: #fff;
+              margin-bottom: 0;
             "
           >
-            Ваш вопрос
+            Ваш вопрос:
           </label>
           <textarea
             id="query"
