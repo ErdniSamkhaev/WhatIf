@@ -1,4 +1,5 @@
 <template>
+  <!-- Главная страница приложения -->
   <div>
     <div style="text-align: center; margin-bottom: 2em">
       <h1 style="font-size: 2.5em; font-weight: bold; color: #fff">
@@ -9,16 +10,7 @@
       </p>
     </div>
 
-    <div
-      style="
-        color: #222;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-        padding: 0;
-        max-width: 600px;
-        margin: 0 auto;
-      "
-    >
+    <div class="query-form">
       <form @submit.prevent="submitQuery">
         <div style="margin-bottom: 1em">
           <label
@@ -88,12 +80,15 @@
     </div>
 
     <ErrorMessage :error="error" />
-
+    <!-- пропс scenario передается в ScenarioCard.vue -->
     <ScenarioCard v-if="currentScenario" :scenario="currentScenario" />
   </div>
 </template>
 
 <script setup>
+// Взаимодействие с серваком
+// пиния для управления состоянием приложения loading, error, currentScenario
+// submitQuery — обработчик отправки формы, вызывает генерацию сценария
 import { ref } from "vue";
 import { useHistoryStore } from "../store/history";
 import { storeToRefs } from "pinia";
@@ -118,5 +113,15 @@ const submitQuery = async () => {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.query-form {
+  background: #23272f;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  padding: 1.5em;
+  max-width: 600px;
+  margin: 0 auto;
 }
 </style>

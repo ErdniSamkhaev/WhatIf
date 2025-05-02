@@ -10,6 +10,14 @@ export class SourceValidator {
     "britannica.com",
     "academia.edu",
     "jstor.org",
+    "bbc.co.uk",
+    "worldhistory.org",
+    "statearchive.ru",
+    "nationalarchives.gov.uk",
+    "europeana.eu",
+    "springer.com",
+    "scholar.google.com",
+    "plato.stanford.edu",
     // другие надежные домены
   ];
 

@@ -151,7 +151,19 @@ export class YandexGptService {
     // Ищем ссылки в тексте
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     const urls = text.match(urlRegex) || [];
+    // Фильтруем ссылки на Википедию
+    const filteredUrls = urls.filter(
+      (url) => !url.includes("wikipedia.org") && !url.includes("wikisource.org")
+    );
 
+    // Добавляем только разрешённые URL
+    for (const url of filteredUrls) {
+      sources.push({
+        url,
+        title: "Веб-источник",
+        reliability: 0.8,
+      });
+    }
     // Ищем упоминания источников в тексте
     const sourceRegex =
       /(?:источник|ссылка|согласно|по данным)[:\s]+([^\.]+)/gi;
@@ -202,20 +214,7 @@ export class YandexGptService {
     text: string,
     sources: Array<{ url: string; title: string; reliability: number }>
   ): string {
-    const sourcesList = sources
-      .map(
-        (source) => `- ${source.title} (Надежность: ${Math.round(
-          source.reliability * 100
-        )}%)
-   ${source.url}`
-      )
-      .join("\n");
-
-    return `
-${text}
-
-Источники информации:
-${sourcesList}
-    `;
+    // Просто возвращаем текст сценария, без списка источников
+    return text.trim();
   }
 }

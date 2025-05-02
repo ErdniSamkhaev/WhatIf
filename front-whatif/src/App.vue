@@ -1,13 +1,17 @@
 <template>
+  <!-- корневой компонент приложения
+   основной контетнт через router-view
+   компоненты рендерятся внутри main -->
   <div class="app-bg">
-    <div class="container"></div>
     <main class="main-content">
       <router-view />
     </main>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+// возможно добавлю глобальные обработчики событий
+</script>
 
 <style>
 .app-bg {
