@@ -18,6 +18,13 @@ export class SourceValidator {
     "springer.com",
     "scholar.google.com",
     "plato.stanford.edu",
+    "elibrary.ru", // Российская научная электронная библиотека
+    "cyberleninka.ru", // Российская открытая научная библиотека
+    "runivers.ru", // Исторические документы России
+    "prlib.ru", // Президентская библиотека
+    "rsl.ru", // Российская государственная библиотека
+    "bigenc.ru", // Большая российская энциклопедия
+    "dic.academic.ru",
     // другие надежные домены
   ];
 
@@ -43,5 +50,23 @@ export class SourceValidator {
     // Дополнительные проверки...
 
     return Math.min(reliability, 1);
+  }
+  getSourceType(url: string): string {
+    if (url.includes("wikipedia.org")) return "wikipedia";
+    if (url.includes("cyberleninka.ru") || url.includes("jstor.org")) return "academic";
+    if (url.includes("britannica.com") || url.includes("bigenc.ru")) return "encyclopedia";
+    // ... другие правила
+    return "other";
+  }
+  isRussianSource(url: string): boolean {
+    return [
+      "cyberleninka.ru",
+      "elibrary.ru",
+      "runivers.ru",
+      "prlib.ru",
+      "rsl.ru",
+      "bigenc.ru",
+      "dic.academic.ru"
+    ].some(domain => url.includes(domain));
   }
 }

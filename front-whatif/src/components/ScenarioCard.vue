@@ -7,10 +7,20 @@
     <div class="scenario-content">
       {{ scenario.text }}
     </div>
-    <div v-if="scenario.sources && scenario.sources.length" class="sources-block">
+    <div v-if="scenario.confidence !== undefined" class="confidence-block">
+      <strong>Уверенность:</strong> {{ Math.round(scenario.confidence * 100) }}%
+    </div>
+    <div
+      v-if="scenario.sources && scenario.sources.length"
+      class="sources-block"
+    >
       <h3>Источники информации:</h3>
       <ul>
         <li v-for="(source, idx) in scenario.sources" :key="idx">
+          <span v-if="source.type === 'academic'">🏛️</span>
+          <span v-else-if="source.type === 'encyclopedia'">📚</span>
+          <span v-else-if="source.type === 'wikipedia'">⚠️</span>
+          <span v-else>🔗</span>
           <span v-if="source.title">{{ source.title }}</span>
           <span v-if="source.url">
             <a :href="source.url" target="_blank" rel="noopener noreferrer">
@@ -19,6 +29,18 @@
           </span>
           <span v-if="source.reliability !== undefined">
             (Надежность: {{ Math.round(source.reliability * 100) }}%)
+          </span>
+          <span
+            v-if="source.isRussian"
+            style="color: #4fc3f7; font-size: 0.95em"
+          >
+            — Российский научный источник
+          </span>
+          <span
+            v-if="source.type === 'wikipedia'"
+            style="color: #ffb300; font-size: 0.95em"
+          >
+            — Википедия, доверие низкое
           </span>
         </li>
       </ul>
@@ -124,5 +146,10 @@ onMounted(() => {
 }
 .sources-block a:hover {
   color: #82b1ff;
+}
+.confidence-block {
+  margin-top: 1em;
+  color: #aabbee;
+  font-size: 1.05em;
 }
 </style>

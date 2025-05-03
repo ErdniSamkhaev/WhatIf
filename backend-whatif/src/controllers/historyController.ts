@@ -21,10 +21,10 @@ export const generateHistoricalScenario = async (
 
     // Создаем экземпляр исторического сценария
     const scenario = new HistoricalScenario({
-      text: response,
+      text: response.text,
       facts: [], // Будет заполнено после анализа ответа
-      sources: [], // Будет заполнено после анализа ответа
-      confidence: 0,
+      sources: response.sources, // Будет заполнено после анализа ответа
+      confidence: response.confidence,
       unknownAreas: [],
     });
 

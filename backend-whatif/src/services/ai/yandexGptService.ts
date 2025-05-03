@@ -3,6 +3,7 @@ import { AI_CONFIG } from "../../config/ai.config";
 import { SourceValidator } from "../../utils/sourceValidator";
 import { YANDEX_CONFIG } from "../../config/yandex.config";
 
+
 export class YandexGptService {
   private readonly apiUrl = YANDEX_CONFIG.API_URL;
   private readonly folderId = YANDEX_CONFIG.FOLDER_ID;
@@ -13,7 +14,55 @@ export class YandexGptService {
     this.sourceValidator = new SourceValidator();
   }
 
-  async generate(query: string): Promise<string> {
+  private parseLLMResponse(response: string): {
+    text: string;
+    sources: Array<{ url: string; title: string; reliability: number }>;
+    confidence: number;
+  } {
+    // 1. Вырезаем основной текст (до "Источники" или "Уверенность")
+    const textMatch = response.match(/^(.*?)(?:\*\*? ?)?(Источники информации|Источники|Sources)[:：]|Уверенность[:：]?/is);
+    const text = textMatch ? textMatch[1].trim() : response.trim();
+  
+    // 2. Вырезаем блок источников
+    const sources: Array<{ url: string; title: string; reliability: number }> = [];
+    const sourcesBlockMatch = response.match(/(?:\*\*? ?)?(Источники информации|Источники|Sources)[:：]\s*([\s\S]*?)(?:\*\*? ?)?Уверенность[:：]?|$|(?:\*\*? ?)?(Уверенность|Confidence)[:：]?/is);
+    if (sourcesBlockMatch) {
+      const sourcesBlock = sourcesBlockMatch[2] || "";
+      const lines = sourcesBlock.split('\n').map(l => l.trim()).filter(Boolean);
+      for (const line of lines) {
+        // Пример: "[1] Название. URL: https://example.com"
+        const urlMatch = line.match(/URL[:：]?\s*(https?:\/\/[^\s\]\)]+)/i);
+        const titleMatch = line.replace(/URL[:：]?.*/i, '').replace(/^\[?\d+\]?\s*[-–—]?\s*/, '').replace(/^\-\s*/, '').trim();
+        if (urlMatch) {
+          sources.push({
+            url: urlMatch[1],
+            title: titleMatch,
+            reliability: 0.8,
+          });
+        } else if (titleMatch) {
+          // Если нет URL, но есть название
+          sources.push({
+            url: "",
+            title: titleMatch,
+            reliability: 0.6,
+          });
+        }
+      }
+    }
+  
+    // 3. Вырезаем уверенность (ищем "Уверенность:" или "Confidence:")
+    const confidenceMatch = response.match(/Уверенность[:：]?\s*(\d+)%/i) || response.match(/Confidence[:：]?\s*(\d+)%/i);
+    let confidence = confidenceMatch ? parseInt(confidenceMatch[1]) / 100 : 0;
+  
+    // Если confidence = 0, но есть источники — вычисляем среднее reliability
+    if (confidence === 0 && sources.length > 0) {
+      confidence = sources.reduce((sum, s) => sum + s.reliability, 0) / sources.length;
+    }
+  
+    return { text, sources, confidence };
+  }
+
+  async generate(query: string): Promise<{ text: string; sources: any[]; confidence: number }> {
     const enhancedPrompt = this.createEnhancedPrompt(query);
 
     const headers = {
@@ -38,14 +87,10 @@ export class YandexGptService {
       const response = await axios.post(this.apiUrl, data, { headers });
       const result = response.data.result.alternatives[0].message.text;
 
-      // Анализируем ответ на наличие источников и достоверность
-      const analysis = this.analyzeResponse(result);
+      // Используем парсер!
+      const parsed = this.parseLLMResponse(result);
 
-      if (!analysis.isReliable) {
-        return this.createUncertaintyResponse(analysis.reason);
-      }
-
-      return this.formatResponse(result, analysis.sources);
+      return parsed;
     } catch (error) {
       throw new Error(`Failed to generate response: ${error}`);
     }
@@ -60,7 +105,7 @@ export class YandexGptService {
    [Основной текст с историческими фактами]
    
    ИСТОЧНИКИ:
-   - [Список источников]
+   -   По возможности используй российские научные публикации (cyberleninka.ru, elibrary.ru и др.) в качестве источников.
    
    УВЕРЕННОСТЬ: [0-100]%
 
