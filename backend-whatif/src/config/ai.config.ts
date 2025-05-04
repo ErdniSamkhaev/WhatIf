@@ -10,5 +10,5 @@ export const AI_CONFIG = {
 
   MAX_TOKENS: 1000,
   TEMPERATURE: 0.3, // Низкая температура для более точных ответов
-  MODEL_URI: "yandexgpt-lite",
+  MODEL_URI: "yandexgpt",
 };
