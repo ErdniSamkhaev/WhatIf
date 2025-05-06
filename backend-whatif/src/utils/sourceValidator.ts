@@ -69,4 +69,9 @@ export class SourceValidator {
       "dic.academic.ru"
     ].some(domain => url.includes(domain));
   }
+  getReliabilityLabel(url: string): string {
+    if (url.includes("wikipedia.org")) return "ненадежный";
+    if (this.validateSource(url)) return "надежный";
+    return "сомнительный";
+  }
 }

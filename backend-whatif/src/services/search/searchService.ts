@@ -23,7 +23,7 @@ export class SearchService {
         reliability: 0.8, // Научная статья — высокая надёжность
       }));
 
-      return [];
+      return facts;
     } catch (error) {
       throw new Error(`Failed to find historical facts: ${error}`);
     }
