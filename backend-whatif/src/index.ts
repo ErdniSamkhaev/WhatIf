@@ -1,21 +1,13 @@
-import dotenv from "dotenv";
-dotenv.config();
-import { Buffer } from "buffer";
-Buffer.from("test");
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-process.env.LANG = "ru_RU.UTF-8";
-process.env.LC_ALL = "ru_RU.UTF-8";
-
-// Импорт роутов
 import historyRoutes from "./routes/historyRoutes";
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-// Middleware
+// CORS настройки
 app.use(cors({
   origin: ['https://what-if-taupe.vercel.app', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'OPTIONS'],
@@ -23,30 +15,26 @@ app.use(cors({
   credentials: true
 }));
 
-app.options('*', cors());
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-  })
-);
+// Базовые middleware
+app.use(helmet({
+  contentSecurityPolicy: false,
+}));
 app.use(morgan("dev"));
-// Убираем charset из express.json()
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-// Настройка кодировки для всех ответов
-app.use((req, res, next) => {
-  res.charset = "utf-8";
-  res.setHeader("Content-Type", "application/json; charset=utf-8");
-  next();
-});
-
-// Routes
+// Маршруты
 app.use("/api", historyRoutes);
 
-// Health check endpoint
+// Health check
 app.get("/health", (req: Request, res: Response) => {
   res.status(200).json({ status: "ok" });
+});
+
+// Обработка ошибок
+app.use((err: any, req: Request, res: Response, next: Function) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Something broke!" });
 });
 
 app.listen(port, () => {
