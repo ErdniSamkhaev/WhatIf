@@ -2,31 +2,13 @@
 import { ValidatedFact, ScenarioResponse } from "../../types";
 import { SearchService } from "../search/searchService";
 import { ValidationService } from "../validation/validationService";
-import { SourceValidator } from "../../utils/sourceValidator";
 
 export class HistoricalScenarioService {
   private searchService: SearchService;
   private validationService: ValidationService;
-  private sourceValidator = new SourceValidator();
   private MIN_CONFIDENCE_THRESHOLD = 0.7;
   private MIN_REQUIRED_FACTS = 3;
-  
-  private extractSources(facts: ValidatedFact[]) {
-    // Собираем все уникальные источники с меткой надежности
-    const sourcesWithLabels = facts.flatMap(fact =>
-      (fact.sources || []).map(src => ({
-        url: src,
-        label: this.sourceValidator.getReliabilityLabel(src)
-      }))
-    );
-    // Можно добавить фильтрацию по url, чтобы не было дублей
-    const unique = new Map();
-    for (const s of sourcesWithLabels) {
-      if (!unique.has(s.url)) unique.set(s.url, s);
-    }
-    return Array.from(unique.values());
-  }
-  
+
   constructor() {
     this.searchService = new SearchService();
     this.validationService = new ValidationService();
@@ -82,5 +64,9 @@ export class HistoricalScenarioService {
   private calculateConfidence(facts: ValidatedFact[]): number {
     if (facts.length === 0) return 0;
     return facts.reduce((sum, fact) => sum + fact.confidence, 0) / facts.length;
+  }
+
+  private extractSources(facts: ValidatedFact[]) {
+    return [];
   }
 }

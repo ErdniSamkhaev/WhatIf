@@ -10,20 +10,12 @@ interface HistoricalFact {
 export class SearchService {
   async findHistoricalFacts(query: string): Promise<HistoricalFact[]> {
     try {
-      const url = `https://cyberleninka.ru/api/search?query=${encodeURIComponent(query)}&size=5`;
-      const response = await fetch(url);
-      const data = await response.json();
+      // TODO: Реализовать поиск по:
+      // 1. Академическим источникам
+      // 2. Историческим архивам
+      // 3. Проверенным историческим ресурсам
 
-      // Преобразуем результаты поиска в HistoricalFact[]
-      const facts: HistoricalFact[] = data.articles.map((item: any) => ({
-        content: item.title, // Можно добавить аннотацию, если нужна
-        year: item.year || null,
-        source: "CyberLeninka",
-        url: `https://cyberleninka.ru/article/n/${item.id}`,
-        reliability: 0.8, // Научная статья — высокая надёжность
-      }));
-
-      return facts;
+      return [];
     } catch (error) {
       throw new Error(`Failed to find historical facts: ${error}`);
     }
