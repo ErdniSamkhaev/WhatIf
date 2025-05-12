@@ -1,0 +1,172 @@
+:root {
+  --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
+    "Source Han Sans CN", sans-serif;
+}
+
+.main-container {
+  overflow: hidden;
+}
+
+.main-container,
+.main-container * {
+  box-sizing: border-box;
+}
+
+input,
+select,
+textarea,
+button {
+  outline: 0;
+}
+
+.main-container {
+  position: relative;
+  width: 1440px;
+  height: 1024px;
+  margin: 0 auto;
+}
+.program-window {
+  position: absolute;
+  width: 1440px;
+  height: 1024px;
+  top: 0;
+  left: 0;
+  background: #ffffff;
+  overflow: hidden;
+}
+.empty {
+  position: absolute;
+  width: 1727px;
+  height: 987px;
+  top: 0;
+  left: -94px;
+  background: url("../../img/5226926709507485538.jpg")
+    no-repeat center;
+  background-size: cover;
+  opacity: 0.75;
+  z-index: 1;
+}
+.flex-column-b {
+  position: absolute;
+  width: 1157px;
+  height: 886px;
+  top: 14px;
+  left: 43px;
+  font-size: 0px;
+  z-index: 8;
+}
+.your-question {
+  display: block;
+  position: relative;
+  height: 33px;
+  margin: 0 0 0 5px;
+  color: #000000;
+  font-family: Noto Sans Tamil UI, var(--default-font-family);
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 32.688px;
+  text-align: left;
+  white-space: nowrap;
+  z-index: 2;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+.rectangle {
+  position: absolute;
+  width: 1157px;
+  height: 46px;
+  top: 62px;
+  left: 0;
+  background: #d9d9d9;
+  filter: blur(2.4px);
+  z-index: 6;
+}
+.write-here {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  height: 40px;
+  top: 73px;
+  left: 24px;
+  color: rgba(0, 0, 0, 0.86);
+  font-family: Inter, var(--default-font-family);
+  font-size: 33px;
+  font-weight: 400;
+  line-height: 23px;
+  text-align: left;
+  white-space: nowrap;
+  opacity: 1;
+  z-index: 7;
+}
+.rectangle-1 {
+  position: absolute;
+  width: 502px;
+  height: 695px;
+  top: 212px;
+  left: 0;
+  /* background: url("../../img/логотоип\ NVplans.png")
+    no-repeat center; */
+  background-size: cover;
+  background: #d9d9d9;
+  filter: blur(8.5px);
+  z-index: 4;
+}
+.rectangle-2 {
+  position: absolute;
+  width: 428px;
+  height: 643px;
+  top: 243px;
+  left: 36px;
+  background: #ffffff;
+  z-index: 8;
+}
+.flex-column {
+  position: absolute;
+  width: 814px;
+  height: 864px;
+  top: 57px;
+  left: 601px;
+  z-index: 5;
+}
+.polygon {
+  position: relative;
+  width: 51px;
+  height: 82px;
+  margin: 0 0 0 611px;
+  
+  background-size: cover;
+  z-index: 3;
+}
+.nv-plans {
+  position: relative;
+  width: 814px;
+  height: 691px;
+  margin: 91px 0 0 0;
+  background: url("../../img/логотоип\ NVplans.png")
+    no-repeat center;
+  background-size: cover;
+  /* filter: blur(8.5px); */
+  /* z-index: 4; */
+  z-index: 5;
+}
+.button {
+  /* Polygon 1 */
+
+position: absolute;
+width: 35px;
+height: 51px;
+left: 1170px;
+top: 60px;
+/* border-image: linear-gradient(to right, #3acfd5 0%, #3a4ed5 100%) 1; */
+  
+  border-width: 3px;
+  /* box-shadow: 2px 0px red; */
+  /* border-style: inset; */
+  /* padding: 5px; */
+
+background: linear-gradient(360deg, #8678FF 26.95%, #FFFFFF 99.26%);
+transform: rotate(90deg);
+
+}
