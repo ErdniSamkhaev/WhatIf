@@ -64,3 +64,5 @@ npm start
 ```
 ![image](https://github.com/user-attachments/assets/65761340-0e06-4590-baef-af3d26e5c8dd)
 
+##author E.Samkhaev
+##tg: @just_erdni
