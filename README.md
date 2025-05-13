@@ -1,5 +1,6 @@
 # WhatIf Backend
-
+## author E.Samkhaev
+## tg: @just_erdni
 ## Описание
 WhatIf - это система для анализа исторических сценариев, использующая искусственный интеллект для генерации и валидации исторических данных. Бэкенд построен на Node.js с использованием TypeScript и Express.
 
@@ -64,5 +65,4 @@ npm start
 ```
 ![image](https://github.com/user-attachments/assets/65761340-0e06-4590-baef-af3d26e5c8dd)
 
-##author E.Samkhaev
-##tg: @just_erdni
+
